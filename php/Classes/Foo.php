@@ -49,7 +49,7 @@ class author {
 	/**
 	 *constructor for author
 	 *
-	 *@param string|Uuid $authorId of this profile or null if new profile
+	 * @param string|Uuid $authorId of this profile or null if new profile
 	 * @param string $authorAvatarUrl
 	 * @param string $authorActivationToken
 	 * @param string $authorEmail
@@ -57,7 +57,7 @@ class author {
 	 * @param string $authorUserName
 	 *
 	 **/
-	public function __construct($authorId, string $authorAvatarUrl, ?string $authorActivationToken, string $authorEmail, string $authorHash, string $authorUserName) {
+	public function __construct(string $authorId, string $authorAvatarUrl, ?string $authorActivationToken, string $authorEmail, string $authorHash, string $authorUserName) {
 		try {
 			$this->setauthorId($newauthorId);
 			$this->setauthorAvatarUrl($newauthorAvatarUrl);

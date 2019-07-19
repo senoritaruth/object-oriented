@@ -1,8 +1,8 @@
 <?php
-namespace rcisneros/ObjectOriented;
+namespace rcisneros\ObjectOriented;
 
-require once (../Classes/Foo.php);
+require once ("../Classes/Foo.php");
 
-$foo = new Foo();
+$foo = new author("abcd");
 
 var_dump($foo);

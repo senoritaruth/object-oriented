@@ -2,7 +2,7 @@
 
 namespace rcisneros\ObjectOriented;
 
-require_once(dirname(__DIR__, 2) . "/vendor/autoload.php");
+require_once(dirname(__DIR__, 2) . "\php\Classes\autoload.php");
 
 use http\Params;
 use Ramsey\Uuid\Uuid;
@@ -17,10 +17,10 @@ use Ramsey\Uuid\Uuid;
 class author {
 	use ValidateUuid;
 	/**
-	 * id for this profile; this is the primary key
+	 * id for this author; this is the primary key
 	 * @var Uuid $authorId
 	 **/
-	private Uuid $authorId;
+	private $authorId;
 	/**
 	 * picture for author
 	 * @var string $authorAvatarUrl
@@ -59,12 +59,12 @@ class author {
 	 **/
 	public function __construct(string $authorId, string $authorAvatarUrl, ?string $authorActivationToken, string $authorEmail, string $authorHash, string $authorUserName) {
 		try {
-			$this->setauthorId($newauthorId);
-			$this->setauthorAvatarUrl($newauthorAvatarUrl);
-			$this->setauthorActivationToken($newauthorActivationToken);
-			$this->setauthorEmail($newauthorEmail);
-			$this->setauthorHash($newauthorHash);
-			$this->setauthorUserName($newauthorUserName);
+			$this->setauthorId($authorId);
+			$this->setauthorAvatarUrl($authorAvatarUrl);
+			$this->setauthorActivationToken($authorActivationToken);
+			$this->setauthorEmail($authorEmail);
+			$this->setauthorHash($authorHash);
+			$this->setauthorUserName($authorUserName);
 		} catch(\InvalidArgumentException | \RangeException | \TypeError | \Exception $exception) {
 			//determine what exception type was thrown
 			$exceptionType = get_class($exception);
@@ -101,7 +101,7 @@ class author {
 	 * @return string value of the author avatar url
 	 **/
 	public function getauthorAvatarUrl() : string {
-		return $this->authorAvatarUrl);
+		return $this->authorAvatarUrl;
 }
 	/**
 	 * mutator method for author avatar url

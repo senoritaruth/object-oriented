@@ -1,5 +1,5 @@
 <?php
-namespace rcisneros/ObjectOriented
+namespace rcisneros/ObjectOriented;
 
 require once (../Classes/Foo.php);
 

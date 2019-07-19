@@ -1,7 +1,7 @@
 <?php
 namespace rcisneros\ObjectOriented;
-require_once(dirname(__DIR__, 2) . '/php/Classes/autoload.php');
-use Ramsey\Uuid;
+require_once(dirname(__DIR__, 1) . '/vendor/autoload.php');
+use Ramsey\Uuid\Uuid;
 /**
  * Trait to validate a uuid
  * This trait will validate a uuid in any of the following three formats:

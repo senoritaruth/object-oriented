@@ -1,9 +1,9 @@
 <?php
 namespace rcisneros\ObjectOriented;
 
-require_once (dirname(__DIR__, 2) ."/php/Classes/Foo.php");
+require_once (dirname(__DIR__, 1) ."/Classes/Foo.php");
 
 /** @var author $foo instantiation test **/
-$foo = new author("I48@$0$Cs5#H", "", "lwefk32", "RitaLLot@gsnail.com", "alkdjfiaikjfp", "Rita Lot");
+$foo = new author("1471aed4-05c2-4f98-a8a2-d1302a0e8fea", "", "lwefk32", "RitaLLot@gsnail.com", "alkdjfiaikjfp", "Rita Lot");
 
 var_dump($foo);

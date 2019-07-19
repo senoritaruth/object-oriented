@@ -1,6 +1,6 @@
 <?php
 
-namespace rcisneros\ObjectOriented
+namespace rcisneros\ObjectOriented;
 
 require_once(dirname(__DIR__, 2) . "/vendor/autoload.php");
 

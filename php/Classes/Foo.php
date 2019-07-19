@@ -28,7 +28,7 @@ class author {
 	private $authorAvatarUrl;
 	/**
 	 * token handed out to verify that the profile is valid and not malicious.
-	 * @var $authorActivationToken
+	 * @var string $authorActivationToken
 	 **/
 	private $authorActivationToken;
 	/**
@@ -38,9 +38,9 @@ class author {
 	private $authorEmail;
 	/**
 	 * hash for this author password
-	 * @var $authorhash
+	 * @var string $authorHash
 	 **/
-	private $authorhash;
+	private $authorHash;
 	/**
 	 * user name for this author
 	 * @var string $authorUsername
@@ -52,15 +52,25 @@ class author {
 	 *@param string|Uuid $authorId of this profile or null if new profile
 	 * @param string $authorAvatarUrl
 	 * @param string $authorActivationToken
-	 * @param string $authoremail
+	 * @param string $authorEmail
 	 * @param string $authorHash
 	 * @param string $authorUserName
 	 *
 	 **/
 	public function __construct($authorId, string $authorAvatarUrl, ?string $authorActivationToken, string $authorEmail, string $authorHash, string $authorUserName) {
-		try {}
+		try {
+			$this->setauthorId($newauthorId);
+			$this->setauthorAvatarUrl($newauthorAvatarUrl);
+			$this->setauthorActivationToken($newauthorActivationToken);
+			$this->setauthorEmail($newauthorEmail);
+			$this->setauthorHash($newauthorHash);
+			$this->setauthorUserName($newauthorUserName);
+		} catch(\InvalidArgumentException | \RangeException | \TypeError | \Exception $exception) {
+			//determine what exception type was thrown
+			$exceptionType = get_class($exception);
+			throw(new $exceptionType($exception->getMessage(), 0, $exception));
+		}
 	}
-
 
 	/**
 	 * accessor method for author id

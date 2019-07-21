@@ -206,7 +206,7 @@ class author {
 		//enforce that the hash is really an Argon hash
 		$authorHashInfo = password_get_info($newauthorHash);
 		if($authorHashInfo["algoName"] !== "argon2i") {
-			throw(new \RangeException("author hash is not a valid hash"));
+ 				throw(new \RangeException("author hash is not a valid hash"));
 		}
 		//enforce that the hash is exactly 97 chars
 		if(strlen($newauthorHash) !==97) {

@@ -204,7 +204,7 @@ class author {
 			throw(new \InvalidArgumentException("profile hash empty or insecure"));
 		}
 		//enforce that the hash is really an Argon hash
-		$authorHashInfo = password_get_info($newauthorHash);
+		$authorHashInfo = password_hash($password, PASSWORD_ARGON2I);
 		if($authorHashInfo["algoName"] !== "argon2i") {
  				throw(new \RangeException("author hash is not a valid hash"));
 		}

@@ -246,3 +246,57 @@ class author {
 
 }
 
+/**
+ * Inserts this author into MySQL
+ *
+ * @param \PDO $pdo PDO connection object
+ * @throws \PDOException when MySQL related errors occur
+ * @throws \TypeError if $pdo is not a PDO connection object
+ *
+ **/
+public function insert(\PDO $pdo) : void {
+
+	//create query template
+	$query = "INSERT INTO author(authorId, authorAvatarUrl, authorActivationToken, authorEmail, authorHash, authorUserName) VALUES(:authorId, :authorAvatarUrl, :authorActivationToken, :authorEmail, :authorHash, :authorUserName)";
+	$statement = $pdo->prepare($query);
+
+	//bind the member variables to the placeholders in the template
+	$parameters = ["authorId" => $this->authorId->getBytes(), "authorAvatarUrl" => $this->authorAvatarUrl, "authorActivationToken" => $this->authorActivationToken, "authorEmail" => $this->authorEmail, "authorHash" => $this->authorHash, "authorUserName" => $this->authorUserName];
+
+	$statement->execute($parameters);
+}
+
+/**
+ * Updates author info in MySQL
+ *
+ * @param \PDO $pdo PDO connection object
+ * @throws \PDOException when MySQL related errors occur
+ * @throws \TypeError if $pdo is not a PDO connection object
+ **/
+
+public function update(\PDO $pdo) : void {
+	$query = "UPDATE author SET authorId = :authorId, authorAvatarUrl = :authorAvatarUrl, authorActivationToken = :authorActivationToken, authorEmail = :authorEmail, authorHash = :authorHash, authorUserName = :authorUserName WHERE authorId = authorId";
+	$statement = $pdo->prepare($query);
+
+	$parameters = ["authorId" => $this->authorId->GetBytes(), "authorAvatarUrl" => $this->authorAvatarUrl, "authorActivationToken" => $this->authorActivationToken, "authorEmail" => $this->authorEmail, "authorHash" => $this->authorHash, "authorUserName" => $this->authorUserName];
+	$statement->execute($parameters);
+}
+
+/**
+ *deletes from author
+ *
+ * @param \PDO $pdo PDO connection object
+ * @throws \PDOException when MySQL related errors occur
+ * @throws \TypeError if $pdo is not a PDO connection object
+ *
+ **/
+
+public function delete(\PDO $pdo) : void {
+
+	$query = "DELETE FROM author WHERE authorId = :authorId";
+	$statement = $pdo->prepare($query);
+
+	$parameters = ["authorId" => $this->authorId->getBytes()];
+	$statement->execute($parameters);
+}
+

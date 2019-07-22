@@ -46,6 +46,7 @@ class author {
 	 * @var string $authorUsername
 	 **/
 	private $authorUserName;
+
 	/**
 	 *constructor for author
 	 *
@@ -79,6 +80,7 @@ class author {
 	public function getauthorId(): Uuid {
 		return ($this->authorId);
 	}
+
 	/**
 	 * mutator method for author id
 	 *
@@ -86,7 +88,7 @@ class author {
 	 * @throws \RangeException if $newauthorId is not positive
 	 * @throws \TypeError if the profile Id is not
 	 **/
-	public function setauthorId ( $newauthorId): void {
+	public function setauthorId($newauthorId): void {
 		try {
 			$uuid = self::validateUuid($newauthorId);
 		} catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
@@ -96,13 +98,15 @@ class author {
 		//convert and store the author id
 		$this->authorId = $uuid;
 	}
+
 	/** accessor method for author avatar url
 	 *
 	 * @return string value of the author avatar url
 	 **/
-	public function getauthorAvatarUrl() : string {
+	public function getauthorAvatarUrl(): string {
 		return $this->authorAvatarUrl;
-}
+	}
+
 	/**
 	 * mutator method for author avatar url
 	 *
@@ -112,7 +116,7 @@ class author {
 	 * @throws \TypeError if the url is not a string
 	 *
 	 **/
-	public function setauthorAvatarUrl(string $newauthorAvatarUrl) : void {
+	public function setauthorAvatarUrl(string $newauthorAvatarUrl): void {
 
 		$newauthorAvatarUrl = trim($newauthorAvatarUrl);
 		$newauthorAvatarUrl = filter_var($newauthorAvatarUrl, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
@@ -124,21 +128,23 @@ class author {
 		//store the image cloudinary content
 		$this->authorAvatarUrl = $newauthorAvatarUrl;
 	}
+
 	/**
 	 * accessor method for author activation token
 	 *
 	 * @return string value of the activation token
 	 **/
-	public function getAuthorActivationToken() : ?string {
+	public function getAuthorActivationToken(): ?string {
 		return ($this->authorActivationToken);
 	}
+
 	/**
 	 *mutator method for author activation token
 	 *
-	 *@param string $newauthorActivationToken
-	 *@throws \InvalidArgumentException if the token is not a string or is insecure
-	 *@throws \RangeException if the token is not exactly 32 characters
-	 *@throws \TypeError if the activation token is not a string
+	 * @param string $newauthorActivationToken
+	 * @throws \InvalidArgumentException if the token is not a string or is insecure
+	 * @throws \RangeException if the token is not exactly 32 characters
+	 * @throws \TypeError if the activation token is not a string
 	 **/
 	public function setauthorActivationToken(?string $newauthorActivationToken): void {
 		if($newauthorActivationToken === null) {
@@ -155,19 +161,21 @@ class author {
 		}
 		$this->authorActivationToken = $newauthorActivationToken;
 	}
+
 	/**
 	 *accessor method for author email
 	 *
-	 *@return string value of email
+	 * @return string value of email
 	 **/
 	public function getauthorEmail(): string {
 		return $this->authorEmail;
 	}
+
 	/**
 	 * mutator method for author email
 	 *
 	 * @param string $newauthorEmail new value of author email
-	 * @throws \InvalidArgumentException if $newauthorEmail is not a valid email or is 	* insecure
+	 * @throws \InvalidArgumentException if $newauthorEmail is not a valid email or is   * insecure
 	 * @throws \RangeException if $newauthorEmail is > 128 chars
 	 * @throws \TypeError if $newauthorEmail is not a string
 	 **/
@@ -181,6 +189,7 @@ class author {
 		//store the email
 		$this->authorEmail = $newauthorEmail;
 	}
+
 	/**
 	 * accessor method for author hash
 	 *
@@ -206,15 +215,16 @@ class author {
 		//enforce that the hash is really an Argon hash
 		$authorHashInfo = password_get_info($newauthorHash);
 		if($authorHashInfo["algoName"] !== "argon2i") {
- 				throw(new \RangeException("author hash is not a valid hash"));
+			throw(new \RangeException("author hash is not a valid hash"));
 		}
 		//enforce that the hash is exactly 97 chars
-		if(strlen($newauthorHash) !==97) {
+		if(strlen($newauthorHash) !== 97) {
 			throw(new \RangeException("author hash must be 97 characters"));
 		}
 		//store the hash
 		$this->authorHash = $newauthorHash;
 	}
+
 	/**accessor method for author User Name
 	 *
 	 * @return string value of authorUserName
@@ -222,12 +232,13 @@ class author {
 	public function getauthorUserName(): string {
 		return $this->authorUserName;
 	}
+
 	/** mutator method for author User Name
 	 *
-	 *@param string $newauthorUserName new value of author User Name
-	 *@throws \InvalidArgumentException if $newauthorUserName is not secure
-	 *@throws \RangeException if $newauthorUserName is > 32 characters
-	 *@throws \TypeError if $newauthorUserName is not a string
+	 * @param string $newauthorUserName new value of author User Name
+	 * @throws \InvalidArgumentException if $newauthorUserName is not secure
+	 * @throws \RangeException if $newauthorUserName is > 32 characters
+	 * @throws \TypeError if $newauthorUserName is not a string
 	 **/
 	public function setauthorUserName(string $newauthorUserName): void {
 		// verify the user name is secure
@@ -244,59 +255,59 @@ class author {
 		$this->authorUserName = $newauthorUserName;
 	}
 
+
+	/**
+	 * Inserts this author into MySQL
+	 *
+	 * @param \PDO $pdo PDO connection object
+	 * @throws \PDOException when MySQL related errors occur
+	 * @throws \TypeError if $pdo is not a PDO connection object
+	 *
+	 **/
+	public function insert(\PDO $pdo): void {
+
+		//create query template
+		$query = "INSERT INTO author(authorId, authorAvatarUrl, authorActivationToken, authorEmail, authorHash, authorUserName) VALUES(:authorId, :authorAvatarUrl, :authorActivationToken, :authorEmail, :authorHash, :authorUserName)";
+		$statement = $pdo->prepare($query);
+
+		//bind the member variables to the placeholders in the template
+		$parameters = ["authorId" => $this->authorId->getBytes(), "authorAvatarUrl" => $this->authorAvatarUrl, "authorActivationToken" => $this->authorActivationToken, "authorEmail" => $this->authorEmail, "authorHash" => $this->authorHash, "authorUserName" => $this->authorUserName];
+
+		$statement->execute($parameters);
+	}
+
+	/**
+	 * Updates author info in MySQL
+	 *
+	 * @param \PDO $pdo PDO connection object
+	 * @throws \PDOException when MySQL related errors occur
+	 * @throws \TypeError if $pdo is not a PDO connection object
+	 **/
+
+	public function update(\PDO $pdo): void {
+		$query = "UPDATE author SET authorId = :authorId, authorAvatarUrl = :authorAvatarUrl, authorActivationToken = :authorActivationToken, authorEmail = :authorEmail, authorHash = :authorHash, authorUserName = :authorUserName WHERE authorId = :authorId";
+		$statement = $pdo->prepare($query);
+
+		$parameters = ["authorId" => $this->authorId->GetBytes(), "authorAvatarUrl" => $this->authorAvatarUrl, "authorActivationToken" => $this->authorActivationToken, "authorEmail" => $this->authorEmail, "authorHash" => $this->authorHash, "authorUserName" => $this->authorUserName];
+		$statement->execute($parameters);
+	}
+
+	/**
+	 *deletes from author
+	 *
+	 * @param \PDO $pdo PDO connection object
+	 * @throws \PDOException when MySQL related errors occur
+	 * @throws \TypeError if $pdo is not a PDO connection object
+	 *
+	 **/
+
+	public function delete(\PDO $pdo): void {
+
+		$query = "DELETE FROM author WHERE authorId = :authorId";
+		$statement = $pdo->prepare($query);
+
+		$parameters = ["authorId" => $this->authorId->getBytes()];
+		$statement->execute($parameters);
+	}
+
 }
-
-/**
- * Inserts this author into MySQL
- *
- * @param \PDO $pdo PDO connection object
- * @throws \PDOException when MySQL related errors occur
- * @throws \TypeError if $pdo is not a PDO connection object
- *
- **/
-public function insert(\PDO $pdo) : void {
-
-	//create query template
-	$query = "INSERT INTO author(authorId, authorAvatarUrl, authorActivationToken, authorEmail, authorHash, authorUserName) VALUES(:authorId, :authorAvatarUrl, :authorActivationToken, :authorEmail, :authorHash, :authorUserName)";
-	$statement = $pdo->prepare($query);
-
-	//bind the member variables to the placeholders in the template
-	$parameters = ["authorId" => $this->authorId->getBytes(), "authorAvatarUrl" => $this->authorAvatarUrl, "authorActivationToken" => $this->authorActivationToken, "authorEmail" => $this->authorEmail, "authorHash" => $this->authorHash, "authorUserName" => $this->authorUserName];
-
-	$statement->execute($parameters);
-}
-
-/**
- * Updates author info in MySQL
- *
- * @param \PDO $pdo PDO connection object
- * @throws \PDOException when MySQL related errors occur
- * @throws \TypeError if $pdo is not a PDO connection object
- **/
-
-public function update(\PDO $pdo) : void {
-	$query = "UPDATE author SET authorId = :authorId, authorAvatarUrl = :authorAvatarUrl, authorActivationToken = :authorActivationToken, authorEmail = :authorEmail, authorHash = :authorHash, authorUserName = :authorUserName WHERE authorId = authorId";
-	$statement = $pdo->prepare($query);
-
-	$parameters = ["authorId" => $this->authorId->GetBytes(), "authorAvatarUrl" => $this->authorAvatarUrl, "authorActivationToken" => $this->authorActivationToken, "authorEmail" => $this->authorEmail, "authorHash" => $this->authorHash, "authorUserName" => $this->authorUserName];
-	$statement->execute($parameters);
-}
-
-/**
- *deletes from author
- *
- * @param \PDO $pdo PDO connection object
- * @throws \PDOException when MySQL related errors occur
- * @throws \TypeError if $pdo is not a PDO connection object
- *
- **/
-
-public function delete(\PDO $pdo) : void {
-
-	$query = "DELETE FROM author WHERE authorId = :authorId";
-	$statement = $pdo->prepare($query);
-
-	$parameters = ["authorId" => $this->authorId->getBytes()];
-	$statement->execute($parameters);
-}
-

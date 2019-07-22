@@ -238,7 +238,7 @@ class author {
 	public function setauthorUserName(string $authorUserName): void {
 		// verify the user name is secure
 		$newauthorUserName = trim($newauthorUserName);
-		$newauthorUserName = filter_var($newauthorUserName, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
+		$newauthorUserName = filter_var($newauthorUserName, FILTER_SANITIZE_STRING);
 		if(empty($newauthorUserName) === true) {
 			throw(new \InvalidArgumentException("Author User Name is empty or insecure"));
 		}

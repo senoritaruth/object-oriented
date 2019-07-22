@@ -167,7 +167,7 @@ class author {
 	 * mutator method for author email
 	 *
 	 * @param string $newauthorEmail new value of author email
-	 * @throws \InvalidArgumentException if $newauthorEmail is not a valid email or is insecure
+	 * @throws \InvalidArgumentException if $newauthorEmail is not a valid email or is 	* insecure
 	 * @throws \RangeException if $newauthorEmail is > 128 chars
 	 * @throws \TypeError if $newauthorEmail is not a string
 	 **/
@@ -176,7 +176,7 @@ class author {
 		$newauthorEmail = trim($newauthorEmail);
 		$newauthorEmail = filter_var($newauthorEmail, FILTER_VALIDATE_EMAIL);
 		if(empty($newauthorEmail) === true) {
-			throw(new \RangeException("profile email is too large"));
+			throw(new \RangeException("profile email is empty or insecure"));
 		}
 		//store the email
 		$this->authorEmail = $newauthorEmail;
@@ -229,7 +229,7 @@ class author {
 	 *@throws \RangeException if $newauthorUserName is > 32 characters
 	 *@throws \TypeError if $newauthorUserName is not a string
 	 **/
-	public function setauthorUserName(string $authorUserName): void {
+	public function setauthorUserName(string $newauthorUserName): void {
 		// verify the user name is secure
 		$newauthorUserName = trim($newauthorUserName);
 		$newauthorUserName = filter_var($newauthorUserName, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
@@ -240,7 +240,6 @@ class author {
 		if(strlen($newauthorUserName) > 32) {
 			throw(new \RangeException("author user name is too long"));
 		}
-
 		// store the author user name
 		$this->authorUserName = $newauthorUserName;
 	}

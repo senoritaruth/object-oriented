@@ -136,7 +136,7 @@ class author {
 	 *mutator method for author activation token
 	 *
 	 *@param string $newauthorActivationToken
-	 *@throws \InvalidArgumentExceptionif the token is not a string or is insecure
+	 *@throws \InvalidArgumentException if the token is not a string or is insecure
 	 *@throws \RangeException if the token is not exactly 32 characters
 	 *@throws \TypeError if the activation token is not a string
 	 **/
@@ -204,7 +204,7 @@ class author {
 			throw(new \InvalidArgumentException("profile hash empty or insecure"));
 		}
 		//enforce that the hash is really an Argon hash
-		$authorHashInfo = password_hash($password, PASSWORD_ARGON2I);
+		$authorHashInfo = password_hash($newauthorHash, PASSWORD_ARGON2I);
 		if($authorHashInfo["algoName"] !== "argon2i") {
  				throw(new \RangeException("author hash is not a valid hash"));
 		}

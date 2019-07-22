@@ -219,9 +219,6 @@ class author {
 	 *
 	 * @return string value of authorUserName
 	 **/
-	/**
-	 * @return string
-	 */
 	public function getauthorUserName(): string {
 		return $this->authorUserName;
 	}
@@ -231,14 +228,11 @@ class author {
 	 *@throws \InvalidArgumentException if $newauthorUserName is not secure
 	 *@throws \RangeException if $newauthorUserName is > 32 characters
 	 *@throws \TypeError if $newauthorUserName is not a string
-	 */
-	/**
-	 * @param string $authorUsername
-	 */
+	 **/
 	public function setauthorUserName(string $authorUserName): void {
 		// verify the user name is secure
 		$newauthorUserName = trim($newauthorUserName);
-		$newauthorUserName = filter_var($newauthorUserName, FILTER_SANITIZE_STRING);
+		$newauthorUserName = filter_var($newauthorUserName, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
 		if(empty($newauthorUserName) === true) {
 			throw(new \InvalidArgumentException("Author User Name is empty or insecure"));
 		}

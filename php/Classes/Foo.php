@@ -213,7 +213,7 @@ class author {
 			throw(new \RangeException("author hash must be 97 characters"));
 		}
 		//store the hash
-		$this->authorhash = $newauthorHash;
+		$this->authorHash = $newauthorHash;
 	}
 	/**accessor method for author User Name
 	 *
@@ -222,8 +222,8 @@ class author {
 	/**
 	 * @return string
 	 */
-	public function getAuthorUsername(): string {
-		return $this->authorUsername;
+	public function getauthorUserName(): string {
+		return $this->authorUserName;
 	}
 	/** mutator method for author User Name
 	 *
@@ -235,10 +235,10 @@ class author {
 	/**
 	 * @param string $authorUsername
 	 */
-	public function setauthorUserName(string $authorUsername): void {
+	public function setauthorUserName(string $authorUserName): void {
 		// verify the user name is secure
-		$newauthorUserName = trim($newAuthorName);
-		$newAuthorUserName = filter_var($newauthorUserName, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
+		$newauthorUserName = trim($newauthorUserName);
+		$newauthorUserName = filter_var($newauthorUserName, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
 		if(empty($newauthorUserName) === true) {
 			throw(new \InvalidArgumentException("Author User Name is empty or insecure"));
 		}
